@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('images/login.jpg'); /* Add your background image URL here */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8); /* Adjust the last value for transparency */
+            padding: 30px;
+            border-radius: 100px;
+            box-shadow: 0px 0px 10px 0px #ffffff;
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the form content */
+            text-align: center; /* Centering titles */
+            margin-right: 100px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #aaadf6;
+            border-radius: 100px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: transparent;
+            color: #000000;
+            cursor: pointer;
+            border: 2px solid #aaadf6;
+            border-radius: 100px;
+            padding: 10px;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #aaadf6;
+            color: #000000;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            text-align: center; /* Center the label text */
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+
+    <script>
+        // Function to validate the registration form
+        function validateForm() {
+            // Validate username (no spaces allowed)
+            const username = document.getElementById("usernameID").value;
+            if (username.trim() === "") {
+                alert("Username is required.");
+                return false;
+            }
+
+            // Validate password and confirmation password
+            const password = document.getElementById("passwordID").value;
+            const password2 = document.getElementById("password2ID").value;
+            if (password !== password2) {
+                alert("Passwords do not match.");
+                return false;
+            }
+
+            // Validate email format using a basic regex pattern
+            const email = document.getElementById("emailID").value;
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                alert("Please enter a valid email address.");
+                return false;
+            }
+
+            // Validate phone number format (for 11 digits)
+            const phonePattern = /^[0-9]{11}$/;
+            if (!phonePattern.test(phone)) {
+                alert("Please enter a valid phone number (11 digits).");
+                return false;
+            }
+
+            // Optional: You can add password strength validation here
+
+            return true; // Form is valid
+        }
+    </script>
+</head>
+
+<body>
+
+    <form action="registration.php" method="post" onsubmit="return validateForm()">
+        <h1>Registration</h1>
+        <label for="usernameID">UserName:</label>
+        <input type="text" name="username" id="usernameID" required>
+
+        <label for="passwordID">New Password:</label>
+        <input type="password" name="password" id="passwordID" required>
+
+        <label for="password2ID">Confirm Password:</label>
+        <input type="password" name="password2" id="password2ID" required>
+
+        <label for="fnameID">First Name:</label>
+        <input type="text" name="fname" id="fnameID" required>
+
+        <label for="lnameID">Last Name:</label>
+        <input type="text" name="lname" id="lnameID" required>
+
+        <label for="emailID">Email:</label>
+        <input type="text" name="email" id="emailID" required>
+
+        <label for="phoneID">Phone Number:</label>
+        <input type="text" name="phone" id="phoneID" required>
+
+        <input type="submit" value="Register">
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>
+        function register() {
+            window.location.href = "registration.html"; // Redirect to registration page
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('images/login.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 80%;
+        }
+
+        form {
+            width: 20%;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 100px;
+            box-shadow: 0px 0px 10px 0px #888888;
+            text-align: center; /* Centering titles */
+            margin-right: 20px;
+            transform: translateY(100px) translateX(460px); /* Shift 100px to the left */
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100%);
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #aaadf6;
+            border-radius: 100px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            background-color: transparent;
+            color: #000000;
+            cursor: pointer;
+            border: 2px solid #aaadf6;
+            border-radius: 100px;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #aaadf6;
+            color: #000000;
+        }
+
+        .form-group {
+            margin-top: 10px;
+        }
+
+        .radio-label {
+            display: inline-block;
+            position: relative;
+            padding-left: 30px;
+            margin-right: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .radio-label input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .radio-checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        .radio-label input:checked+.radio-checkmark:after {
+            content: "";
+            position: absolute;
+            display: block;
+            top: 7px;
+            left: 7px;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background-color: #aaadf6;
+        }
+
+        .welcome {
+            width: 45%;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 30px;
+            border-radius: 100px;
+            box-shadow: 0px 0px 10px 0px #888888;
+            text-align: center;
+            color: #000000;
+
+            /* Center at the top */
+            margin: -550px auto 0 auto;
+            transform: translateX(-150px); /* Shift 100px to the left */
+            position: relative; /* Or remove if not needed */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form action="login.php" method="post">
+            <h1>Login</h1> <!-- Centered title -->
+            Username: <br>
+            <input type="text" name="username" id="emailID" required><br>
+            Password: <br>
+            <input type="password" name="password" id="passwordID" required><br>
+            <div class="form-group">
+                <label class="radio-label">
+                    <input type="radio" name="role" value="admin" required> Admin
+                    <span class="radio-checkmark"></span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="role" value="user" required> User
+                    <span class="radio-checkmark"></span>
+                </label>
+            </div>
+            <input type="submit" value="LOG IN">
+            <div class="form-group">
+                <input type="button" value="Switch to Register" onclick="register()"> <!-- Clearer text -->
+            </div>
+        </form>
+        <div class="welcome">
+            <h1>Property Connect</h1> <!-- Centered title -->
+            <!-- Add additional content for the welcome section if needed -->
+        </div>
+    </div>
+</body>
+
+</html>

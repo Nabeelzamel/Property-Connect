@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Form</title>
+    <style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('images/admin_house.jpg');
+    background-size: cover ;
+    background-position: center 80%;
+    background-repeat: no-repeat;
+}
+
+.container {
+    max-width: 350px;
+    margin: 0 auto 20px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(255, 254, 254, 0.1);
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50px; /* Adjust the border-radius for rounded corners */
+}
+
+form {
+    margin-top: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #000000;
+}
+
+label[for="plateId"],
+label[for="color"],
+label[for="fueltype"],
+label[for="transition"],
+label[for="model"],
+label[for="officeId"],
+label[for="pickupDate"],
+label[for="customerId"] {
+    color: #000000;
+}
+
+input,
+button,
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 8px;
+    box-sizing: border-box;
+    color: #000000;
+}
+
+button {
+    background-color: transparent;
+    color: #000000;
+    cursor: pointer;
+    border: 2px solid #aaadf6;
+    border-radius: 50px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #aaadf6;
+    color: #000000;
+}
+
+/* Style radio buttons for body shape */
+input[type="radio"] {
+    display: none;
+}
+
+input[type="radio"] + label {
+    display: inline-block;
+    padding: 6px 10px;
+    margin-right: 8px;
+    background-color: transparent;
+    border: 2px solid #aaadf6;
+    border-radius: 50px;
+    cursor: pointer;
+    color: #000000;
+}
+
+input[type="radio"]:checked + label {
+    background-color: #aaadf6;
+    color: #000000;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Property For Reservation</h2>
+    
+        <!-- Reservation Form -->
+        <form id="reservation" action="admin.php" method="post">
+            <div class="reservation">
+                <h3>Update Property Status</h3>
+                <label for="customerId">Customer ID:</label>
+                <input type="text" id="customerId" name="customerId" required>
+    
+                <label for="propertyid">Property ID:</label>
+                <input type="text" id="propertyid" name="propertyid" required>
+    
+                <label for="pickupDate">Pick-up Date:</label>
+                <input type="date" id="pickupDate" name="pickupDate" required>
+    
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    
+        <br>
+    
+        <!-- View Reservation Form -->
+        <form id="viewreservation" action="view_reservation.php" method="post">
+            <div class="viewreservation">
+                <h3>View Reservations by Date</h3>
+                <label for="startDate">Start Date:</label>
+                <input type="date" id="startDate" name="startDate" required>
+    
+                <label for="endDate">End Date:</label>
+                <input type="date" id="endDate" name="endDate" required>
+    
+                <button type="submit">View Reservations</button>
+            </div>
+        </form>
+    
+        <br>
+    
+        <!-- Add Property Section -->
+        <form id="addPropertyForm" onsubmit="submitProperty(event)">
+            <div class="add-property">
+                <h3>Add Your Property</h3>
+    
+                <label>Property Type:</label>
+                    <select name="propertytype" class="form-control form-control-lg" style="font-size: 2.0rem; height: 100px;" required>
+                        <option value="">Select Type</option>
+                        <option value="2 bedrooms">2 bedrooms</option>
+                        <option value="3 bedrooms">3 bedrooms</option>
+                        <option value="Twin house">Twin house</option>
+                        <option value="Standalone">Standalone</option>
+                    </select>
+
+    
+                <label>Address:</label>
+                <input type="text" name="address" class="form-control" required>
+    
+                <label>Year:</label>
+                <input type="number" name="year" class="form-control" required>
+    
+                <label>Price:</label>
+                <input type="number" name="price" class="form-control" required>
+    
+                <label>Space:</label>
+                <input type="number" name="space" class="form-control" required>
+    
+                <label>Image Path:</label>
+                <input type="text" name="imagepath" class="form-control" required>
+    
+                <label>Location:</label>
+                <select name="location" class="form-control" style="font-size: 2.0rem; height: 100px;" required>
+                    <option value="">Select Location</option>
+                    <option value="1">Zayed</option>
+                    <option value="2">New Cairo</option>
+                    <option value="3">Alexandria</option>
+                    <option value="4">Emirates</option>
+                </select>
+    
+                <br>
+                <button type="submit" class="btn btn-success">Submit Property</button>
+            </div>
+        </form>
+    </div>
+    
+    
+</div>
+
+
+<script>
+    function submitProperty(event) {
+        event.preventDefault();
+        const form = document.getElementById('addPropertyForm');
+        const formData = new FormData(form);
+
+        fetch('admin.php', {
+            method: 'POST',
+            body: formData
+            // Do not set Content-Type; browser handles it automatically
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Your property is successfully put on the offer list!');
+                window.location.href = 'admin.html';
+            } else if (data.error) {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            alert('Succeessfully the new property is added');
+        });
+    }
+
+    </script>
+<script>
+    function formatDate(date) {
+    var formattedDate = new Date(date);
+    var year = formattedDate.getFullYear();
+    var month = ('0' + (formattedDate.getMonth() + 1)).slice(-2);
+    var day = ('0' + formattedDate.getDate()).slice(-2);
+    return year + '-' + month + '-' + day;
+}
+    // Modify the existing fetchReservations function to use fetchReservationsAsync
+async function fetchReservations(startDate, endDate) {
+    try {
+        // Fetch reservations asynchronously
+        var reservations = await fetchReservationsAsync(startDate, endDate);
+
+        // Display reservations
+        displayReservations(reservations);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Add the fetchReservationsAsync function
+function fetchReservationsAsync(startDate, endDate) {
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'admin.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    resolve(JSON.parse(xhr.responseText));
+                } else {
+                    reject('Error fetching reservations');
+                }
+            }
+        };
+
+        xhr.onerror = function () {
+            reject('Error fetching reservations');
+        };
+
+        // Format the date values in yyyy-mm-dd format
+        var formattedStartDate = formatDate(startDate);
+        var formattedEndDate = formatDate(endDate);
+
+        var data = 'fetchReservations=true&startDate=' + formattedStartDate + '&endDate=' + formattedEndDate;
+        xhr.send(data);
+    });
+}
+
+async function fetchspecificReservations(carId ,startDate1, endDate1) {
+    try {
+        // Fetch reservations asynchronously
+        var reservations = await fetchspecificReservationsAsync(carId ,startDate1, endDate1);
+
+        // Display reservations
+        displayReservations(reservations);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Add the fetchReservationsAsync function
+function fetchspecificReservationsAsync(carId , startDate1, endDate1) {
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'admin.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    resolve(JSON.parse(xhr.responseText));
+                } else {
+                    reject('Error fetching reservations');
+                }
+            }
+        };
+
+        xhr.onerror = function () {
+            reject('Error fetching reservations');
+        };
+
+        // Format the date values in yyyy-mm-dd format
+        var formattedStartDate1 = formatDate(startDate1);
+        var formattedEndDate1 = formatDate(endDate1);
+
+        var data = 'fetchspecificReservations=truecarId=' + carId + '&startDate=' + formattedStartDate1 + '&endDate=' + formattedEndDate1;
+        xhr.send(data);
+    });
+}
+async function fetchStatus(specificDate) {
+        try {
+            // Fetch customer reservations asynchronously
+            var reservations = await fetchStatusAsync(specificDate);
+
+            // Display reservations
+            displayReservations(reservations);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function fetchStatusAsync(specificDate) {
+        return new Promise((resolve, reject) => {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'admin.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject('Error fetching customer reservations');
+                    }
+                }
+            };
+
+            xhr.onerror = function () {
+                reject('Error fetching customer reservations');
+            };
+
+            var data = 'fetchCustomerReservations=true&customerId=' + specificDate;
+            xhr.send(data);
+        });
+
+    }
+
+
+    // Modify the existing fetchReservations function to use fetchCustomerReservationsAsync
+    async function fetchCustomerReservations(customerId) {
+        try {
+            // Fetch customer reservations asynchronously
+            var reservations = await fetchCustomerReservationsAsync(customerId);
+
+            // Display reservations
+            displayReservations(reservations);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    function fetchCustomerReservationsAsync(customerId) {
+        return new Promise((resolve, reject) => {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'admin.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject('Error fetching customer reservations');
+                    }
+                }
+            };
+
+            xhr.onerror = function () {
+                reject('Error fetching customer reservations');
+            };
+
+            var data = 'fetchCustomerReservations=true&customerId=' + customerId;
+            xhr.send(data);
+        });
+
+    }
+
+    async function fetchPayments(startDate5, endDate5) {
+    try {
+        // Fetch reservations asynchronously
+        var reservations = await fetchPaymentsAsync(startDate5, endDate5);
+
+        // Display reservations
+        displayReservations(reservations);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// Add the fetchReservationsAsync function
+function fetchPaymentsAsync(startDate5, endDate5) {
+    return new Promise((resolve, reject) => {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'admin.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    resolve(JSON.parse(xhr.responseText));
+                } else {
+                    reject('Error fetching reservations');
+                }
+            }
+        };
+
+        xhr.onerror = function () {
+            reject('Error fetching reservations');
+        };
+
+        // Format the date values in yyyy-mm-dd format
+        var formattedStartDate = formatDate(startDate);
+        var formattedEndDate = formatDate(endDate);
+
+        var data = 'fetchReservations=true&startDate=' + formattedStartDate + '&endDate=' + formattedEndDate;
+        xhr.send(data);
+    });
+}
+
+    function displayReservations(reservations) {
+        // Assuming you have a container with the ID 'reservationsContainer' in your HTML
+        var container = document.getElementById('reservationsContainer');
+
+        // Create a table element
+        var table = document.createElement('table');
+        table.border = '1';
+
+        // Create the table header
+        var thead = document.createElement('thead');
+        var headerRow = document.createElement('tr');
+        headerRow.innerHTML = '<th>Customer ID</th><th>Car ID</th><th>Pickup Date</th><th>Return Date</th>';
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // Create the table body
+        var tbody = document.createElement('tbody');
+        reservations.forEach(function (reservation) {
+            var row = document.createElement('tr');
+            row.innerHTML = '<td>' + reservation.customerId + '</td>' +
+                '<td>' + reservation.carId + '</td>' +
+                '<td>' + reservation.pickupdate + '</td>' +
+                '<td>' + reservation.returndate + '</td>';
+            tbody.appendChild(row);
+        });
+        table.appendChild(tbody);
+
+        // Append the table to the container
+        container.innerHTML = '';
+        container.appendChild(table);
+    }
+
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     // Handle form submissions
+    //     document.getElementById('viewreservation').addEventListener('submit', function (event) {
+    //         event.preventDefault();
+    //         var startDate = document.getElementById('startDate').value;
+    //         var endDate = document.getElementById('endDate').value;
+    //         fetchReservations(startDate, endDate);
+    //     });
+
+    //     document.getElementById('viewcustomerreservation').addEventListener('submit', function (event) {
+    //         event.preventDefault();
+    //         var customerId = document.getElementById('customerId').value;
+    //         fetchCustomerReservations(customerId);
+    //     });
+    // });
+</script>
+
+
+
+</body>
+</html>
